@@ -19,7 +19,7 @@ class Activity(models.Model):
 
 class Person(models.Model):
     username =models.CharField(max_length=256)
-    phone = models.IntegerField(max_length=16)
+    phone = models.IntegerField()
 
     def __str__(self):
         return self.username
