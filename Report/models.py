@@ -18,7 +18,11 @@ class Activity(models.Model):
 
 
 class Person(models.Model):
+<<<<<<< HEAD
     username = models.CharField(max_length=256)
+=======
+    username =models.CharField(max_length=256)
+>>>>>>> dc4a1da56a331287e5e82cbe10a9775554ba22a1
     phone = models.IntegerField()
 
     def __str__(self):
