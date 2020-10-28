@@ -1,21 +1,31 @@
+{% extends 'base.html' %} 
+
+{% block content %} 
 {% if activities_list %}
-    <ul>
-    {% for activity in activities_list %}
-        <li><a href="">{{ activity.activity_name }}</a></li>
-        <input id="decision{{ forloop.counter }}">
-        <label for="decision{{ forloop.counter }}">Decision Taken</label><br>
-        <input id="prob{{ forloop.counter }}" >
-        <label for="prob{{ forloop.counter }}">Problems Encountered</label><br>
-        <input id="resp{{ forloop.counter }}">
-        <label for="resp{{ forloop.counter }}">Name</label><br>
-        <input id="phone{{ forloop.counter }}">
-        <label for="resp{{ forloop.counter }}">Phone</label><br>
-    {% endfor %}
-    </ul>
+<ul>
+  {% for activity in activities_list %}
+  <li><a href="">{{ activity.activity_name }}</a></li>
+  <input id="decision{{ forloop.counter }}" />
+  <label for="decision{{ forloop.counter }}">Decision Taken</label
+  ><br />
+  <input id="prob{{ forloop.counter }}" />
+  <label for="prob{{ forloop.counter }}">Problems Encountered</label
+  ><br />
+  <input id="resp{{ forloop.counter }}" />
+  <label for="resp{{ forloop.counter }}">Name</label
+  ><br />
+  <input id="phone{{ forloop.counter }}" />
+  <label for="resp{{ forloop.counter }}">Phone</label
+  ><br />
+  {% endfor %}
+  
+</ul>
 {% else %}
-    <p>No activities are available.</p>
+<p>No activities are available.</p>
 {% endif %}
 <label for="Add activity">Add activity</label>
-<input id="Add activity">
+<input id="Add activity" />
 
-<input type="submit">
+<input type="submit" />
+
+{% endblock %}
