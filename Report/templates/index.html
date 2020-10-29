@@ -5,18 +5,23 @@
 <ul>
   {% for activity in activities_list %}
   <li><a href="">{{ activity.activity_name }}</a></li>
-  <input id="decision{{ forloop.counter }}" />
-  <label for="decision{{ forloop.counter }}">Decision Taken</label
-  ><br />
-  <input id="prob{{ forloop.counter }}" />
+  <form method="POST"> 
+    {% csrf_token %}
+    <input type="hidden" name="activity_id" value="{{ activity.id }}">
+    <input name="decision_name" id="decision{{ forloop.counter }}" />
+    <label for="decision{{ forloop.counter }}">Decision Taken</label>
+  <br/>
+  <input name="problem_name" id="prob{{ forloop.counter }}" />
   <label for="prob{{ forloop.counter }}">Problems Encountered</label
   ><br />
-  <input id="resp{{ forloop.counter }}" />
+  <input name="username" id="resp{{ forloop.counter }}" />
   <label for="resp{{ forloop.counter }}">Name</label
   ><br />
-  <input id="phone{{ forloop.counter }}" />
+  <input name="phone" id="phone{{ forloop.counter }}" />
   <label for="resp{{ forloop.counter }}">Phone</label
   ><br />
+  <input type="submit" />
+</form>
   {% endfor %}
   
 </ul>
@@ -24,8 +29,10 @@
 <p>No activities are available.</p>
 {% endif %}
 <label for="Add activity">Add activity</label>
-<input id="Add activity" />
+<form action = "/create_activity" method="POST" >{% csrf_token %}
+  <input id="Add activity" name="activity_name"/>
 
-<input type="submit" />
+  <input type="submit" />
+</form>
 
 {% endblock %}
