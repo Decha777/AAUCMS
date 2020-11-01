@@ -15,17 +15,28 @@ Including another URLconf
 """
 from django.contrib import admin
 <<<<<<< HEAD
+<<<<<<< HEAD
 from django.urls import path, include
 =======
 from django.urls import path
 >>>>>>> dc4a1da56a331287e5e82cbe10a9775554ba22a1
+=======
+from django.urls import path, include
+from django.contrib.auth.views import LoginView,LogoutView
+>>>>>>> main
 from Report import views
 
 urlpatterns = [
     path('admin/', admin.site.urls),
 <<<<<<< HEAD
+<<<<<<< HEAD
     path('', include('Report.urls', namespace='report'))
 =======
     path('tasks', views.list_activities)
 >>>>>>> dc4a1da56a331287e5e82cbe10a9775554ba22a1
+=======
+    path('', include('Report.urls', namespace='report')),
+    path('accounts/login/', LoginView.as_view(), name= 'user_login'),
+    path('accounts/logout/', LogoutView.as_view(), name= 'user_logout', kwargs={'next_page': '/'}),
+>>>>>>> main
 ]

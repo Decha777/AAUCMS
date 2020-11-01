@@ -1,4 +1,7 @@
 <<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> main
 {% extends 'base.html' %} {% block content %} {% if activities_list %}
 <ul>
   {% for activity in activities_list %}
@@ -16,6 +19,7 @@
   <label for="resp{{ forloop.counter }}">Phone</label
   ><br />
   {% endfor %}
+<<<<<<< HEAD
   
 </ul>
 {% else %}
@@ -42,11 +46,20 @@
         <label for="resp{{ forloop.counter }}">Phone</label><br>
     {% endfor %}
     </ul>
+=======
+</ul>
+>>>>>>> main
 {% else %}
-    <p>No activities are available.</p>
+<p>No activities are available.</p>
 {% endif %}
 <label for="Add activity">Add activity</label>
-<input id="Add activity">
+<input id="Add activity" />
 
+<<<<<<< HEAD
 <input type="submit">
 >>>>>>> dc4a1da56a331287e5e82cbe10a9775554ba22a1
+=======
+<input type="submit" />
+
+{% endblock %}
+>>>>>>> main

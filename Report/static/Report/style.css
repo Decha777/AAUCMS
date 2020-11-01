@@ -1,4 +1,8 @@
+<<<<<<< HEAD
 ﻿* {
+=======
+* {
+>>>>>>> main
   margin: 0;
   padding: 0;
 }
@@ -12,6 +16,10 @@ html {
 body {
   height: 100vh;
 }
+<<<<<<< HEAD
+=======
+
+>>>>>>> main
 .layout-grid {
   display: grid;
   grid-template-areas: "header" "main" "footer";
