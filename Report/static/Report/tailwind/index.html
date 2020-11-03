@@ -1,0 +1,339 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <link rel="stylesheet" href="css/style.css">
+</head>
+
+<body class="box-border h-screen">
+    <div class="layout-grid">
+        <header class='myHeader bg-gray-500'>
+            
+  <nav class="bg-transparent py-4 px-4 lg:px-16 xl:py-8 fixed top-0 z-50 w-full md:px-8 xl:px-24 xxl:px-40" id="navbar">
+    <div class="flex items-center justify-between flex-wrap">
+      <div class="w-1/2 md:w-1/4">
+        <a href="#">
+          <svg xmlns="http://www.w3.org/2000/svg" width="188" height="39" viewBox="0 0 188 39">
+            <g transform="translate(-193 -27)"><text transform="translate(280 56)" fill="#454f5b" font-size="24"
+                font-family="ArialRoundedMTBold, Arial Rounded MT">
+                <tspan x="0" y="0">FairRate</tspan>
+              </text>
+              <g transform="translate(193 27)">
+                <path d="M54,33H0L27,0,54,33ZM23,16V27h8V16H23Z" transform="translate(0 6)" fill="#4ad5f6" />
+                <path d="M14,0,0,16H27L14,0" transform="translate(40)" fill="#95cdb1" />
+                <path d="M14,0,0,16H27L14,0" transform="translate(55 18)" fill="#ffc48b" />
+              </g>
+            </g>
+          </svg>
+        </a>
+      </div>
+
+      <div class="w-1/2 text-right sm:hidden">
+        <button type="button" class="navbar-toggler">
+          <span class="navbar-toggler-bar"></span>
+          <span class="navbar-toggler-bar"></span>
+          <span class="navbar-toggler-bar"></span>
+        </button>
+      </div>
+
+      <div class="w-full navigation-menu hidden md:flex md:w-3/4">
+        <div class="flex flex-col md:flex-row pt-8 pb-2 md:pt-0 md:pb-0 md:ml-auto md:items-center">
+       <a href="#" class="block mt-3 font-semibold md:ml-6 hover:text-indigo-200 bg-blue-500  px-4 py-2 rounded md:mt-0 text-white">Rates</a>
+           <a href="#" class="block mt-3 font-semibold md:ml-6 hover:text-indigo-200 bg-blue-500  px-4 py-2 rounded md:mt-0 text-white">About
+            Us</a>
+    <a href="#" class="block mt-3 font-semibold md:ml-6 hover:text-indigo-200 bg-blue-500  px-4 py-2 rounded md:mt-0 text-white">Resources</a>
+        <a href="#" class="block mt-3 font-semibold md:ml-6 hover:text-indigo-200 bg-blue-500  px-4 py-2 rounded md:mt-0 text-white">FAQs</a>
+          <a href="http://svelte.dev"
+            class="block mt-3 bg-black hover:text-white px-4 py-2 rounded text-red-600 font-semibold md:ml-6 md:mt-0">Svelte</a>
+        </div>
+      </div>
+    </div>
+  </nav>
+
+        </header>
+
+        <!-- hero ============================== -->
+        <div class="myHero md:flex justify-between py-20 px-10 bg-indigo-600 text-indigo-100">
+
+            <!--   left -->
+            <div class="md:w-1/2 mb-10 md:mb-0">
+                <h2 class="text-2xl md:text-4xl lg:text-6xl text-white mb-6">Welcome to Doggo City!</h2>
+                <p class="mb-6">There is never a sad day here!</p>
+
+                <a href="#"
+                    class="inline-block py-3 px-6 text-lg bg-gray-400 text-gray-800 hover:bg-gray-300 rounded mr-2">Learn
+                    More</a>
+                <a href="#"
+                    class="inline-block py-3 px-6 text-lg bg-orange-400 text-orange-800 hover:bg-orange-300 rounded">Get
+                    Started</a>
+            </div>
+
+            <!--   right -->
+            <div class="md:w-1/2">
+                <img src="https://images.unsplash.com/photo-1536012441472-aae6b3ce330f?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=2850&q=80"
+                    alt="Happiest Doggo" class="w-full rounded shadow-2xl">
+            </div>
+
+        </div>
+
+        <main class='myMain'>
+            <!--just a container-->
+            <div class="w-full  px-24 grid grid-flow-row lg:grid-cols-2 gap-10 ">
+                <!--whole card act as link-->
+                <a href="#">
+                    <!--blog post card-->
+                    <article class=" overflow-hidden rounded shadow my-4">
+                        <div class="sm:flex sm:flex-wrap">
+                            <div class="sm:w-1/2 h-56 sm:h-auto relative">
+                                <img class="w-full h-full absolute inset-0 object-cover"
+                                    src="https://images.unsplash.com/photo-1483683804023-6ccdb62f86ef?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=675&q=80"
+                                    alt="image">
+                            </div>
+                            <div class="sm:w-1/2 p-4">
+                                <!--post category-->
+                                <span
+                                    class="uppercase tracking-wide inline-block px-2 rounded-full text-xs bg-gray-300 text-gray-600">travel</span>
+                                <!--post title-->
+                                <h4 class="text-lg font-semibold capitalize text-gray-800 mt-2">
+                                    Top destinations you should travel before...
+                                </h4>
+                                <!--post excerpt-->
+                                <p class="h-24 text-gray-700 mt-2 overflow-hidden">
+                                    Lorem ipsum dolor sit amet conse ctetur adipis icing elit Delectus...
+                                    Lorem ipsum dolor sit amet consectetur adipisicing elit. Sapiente voluptatum esse
+                                    dolorem vero animi ratione consequuntur accusamus rerum earum, omnis culpa
+                                    voluptates impedit, dolores ex nulla dicta! Doloremque, quo soluta!
+                                </p>
+
+
+                                <!--post user info-->
+                                <div class="flex items-center mt-3 justify-evenly">
+                                    <img class="h-10 w-10 object-cover rounded"
+                                        src="https://images.unsplash.com/photo-1541647376583-8934aaf3448a?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=100&q=60"
+                                        alt="image">
+                                    <div class="pl-3 text-sm text-gray-600">
+                                        <p class="truncate">Neil Jafferson</p>
+                                        <time>20 June, 2019</time>
+                                    </div>
+                                    <div class="comment">
+                                        <span class="text-gray-600 inline-flex items-center leading-none text-sm">
+                                            <svg class="w-4 h-4 mr-1" stroke="currentColor" stroke-width="2" fill="none"
+                                                stroke-linecap="round" stroke-linejoin="round" viewBox="0 0 24 24">
+                                                <path
+                                                    d="M21 11.5a8.38 8.38 0 01-.9 3.8 8.5 8.5 0 01-7.6 4.7 8.38 8.38 0 01-3.8-.9L3 21l1.9-5.7a8.38 8.38 0 01-.9-3.8 8.5 8.5 0 014.7-7.6 8.38 8.38 0 013.8-.9h.5a8.48 8.48 0 018 8v.5z">
+                                                </path>
+                                            </svg>6
+                                        </span>
+                                    </div>
+                                </div>
+
+                            </div>
+                        </div>
+                    </article>
+                </a>
+
+                <!--card End-->
+
+            </div>
+
+
+            <div class="main bg-white px-6 md:px-16 py-6">
+                <div class="w-full max-w-xl mx-auto">
+                    <form action="" method="post">
+                        <h1 class="text-2xl mb-2">Post new job</h1>
+
+                        <div class="job-info border-b-2 py-2 mb-5">
+                            <!--    Title      -->
+                            <div class="mb-4">
+                                <label class="block text-gray-700 text-sm mb-2" for="job-title">Title</label>
+                                <input
+                                    class="appearance-none block w-full bg-white text-gray-700 border border-gray-400 rounded py-3 px-4 mb-3 leading-tight focus:outline-none focus:border-gray-500"
+                                    type="email" id="job-title" name="job-title" placeholder="Frontend Developer"
+                                    autofocus>
+                            </div>
+
+                            <!--     Link to apply     -->
+                            <div class="mb-4">
+                                <label class="block text-gray-700 text-sm mb-2" for="apply-link">Link to apply</label>
+                                <input
+                                    class="appearance-none block w-full bg-white text-gray-700 border border-gray-400 rounded py-3 px-4 mb-3 leading-tight focus:outline-none focus:border-gray-500"
+                                    type="email" id="apply-link" name="apply-link"
+                                    placeholder="https://www.djangoproject.com/apply">
+                            </div>
+
+                            <div class="md:flex md:justify-between">
+                                <!--      Job Type      -->
+                                <div class="w-full md:w-3/12 mb-4 md:mb-0">
+                                    <label class="block text-gray-700 text-sm mb-2" for="job-type">
+                                        Job Type
+                                    </label>
+                                    <div class="relative">
+                                        <select
+                                            class="block appearance-none w-full bg-white border border-gray-400 text-gray-700 py-3 px-4 pr-8 rounded leading-tight focus:outline-none focus:border-gray-500"
+                                            id="job-type" name="job-type">
+                                            <option>Full-time</option>
+                                            <option>Part-time</option>
+                                            <option>Freelance</option>
+                                            <option>Contract</option>
+                                        </select>
+
+                                        <div
+                                            class=" pointer-events-none absolute inset-y-0 right-0 flex items-center px-2 text-gray-700">
+                                            <svg class="fill-current h-4 w-4" xmlns="http://www.w3.org/2000/svg"
+                                                viewBox="0 0 20 20">
+                                                <path
+                                                    d="M9.293 12.95l.707.707L15.657 8l-1.414-1.414L10 10.828 5.757 6.586 4.343 8z" />
+                                            </svg>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <!--     Location       -->
+                                <div class="w-full md:w-8/12 mb-4 md:mb-0">
+                                    <label for="location" class="block text-gray-700 text-sm mb-2">Location</label>
+                                    <input type="text"
+                                        class="appearance-none block w-full bg-white text-gray-700 border border-gray-400 rounded py-3 px-4 mb-3 leading-tight focus:outline-none focus:border-gray-500"
+                                        id="location" name="location" placeholder="Schwerin">
+
+
+                                </div>
+                            </div> <!-- end group -->
+
+                            <!--    Description      -->
+                            <div>
+                                <label for="description" class="block text-gray-700 text-sm mb-2">Description</label>
+                                <textarea class='bg-gray-100' name="description" id="description" cols="70"
+                                    rows="6"></textarea>
+                            </div>
+
+                            <div class="flex flex-wrap -mx-3">
+                                <!--     Company       -->
+                                <div class="w-full md:w-1/2 px-3 mb-4 md:mb-0">
+                                    <label for="company" class="block text-gray-700 text-sm mb-2">Company</label>
+                                    <input type="text"
+                                        class="appearance-none block w-full bg-white text-gray-700 border border-gray-400 rounded py-3 px-4 mb-3 leading-tight focus:outline-none focus:border-gray-500"
+                                        id="company" name="company" placeholder="Company">
+                                </div>
+
+                                <!--      Company Website      -->
+                                <div class="w-full md:w-1/2 px-3 mb-4 md:mb-0">
+                                    <label for="company" class="block text-gray-700 text-sm mb-2">Company
+                                        Website</label>
+                                    <input type="text"
+                                        class="appearance-none block w-full bg-white text-gray-700 border border-gray-400 rounded py-3 px-4 mb-3 leading-tight focus:outline-none focus:border-gray-500"
+                                        id="company" name="company" placeholder="https://www.djangoproject.com/">
+                                </div>
+                            </div> <!-- end group -->
+
+                            <!--      Company Website      -->
+                            <div class="mb-4 md:mb-0">
+                                <label for="company-logo" class="block text-gray-700 text-sm mb-2">Logo Image</label>
+                                <input type="file"
+                                    class="appearance-none block w-full bg-gray-200 text-gray-700 border border-gray-200 rounded py-3 px-3 mb-3 leading-tight focus:outline-none focus:bg-white focus:border-gray-500"
+                                    id="company-logo" name="company-logo">
+                            </div>
+                        </div> <!-- end job-info -->
+
+
+                        <!--     Submit     -->
+                        <div>
+                            <button class="w-full block bg-blue-500 hover:bg-blue-400 focus:bg-blue-400 text-white font-semibold rounded-lg
+                            px-4 py-3 mt-6" type="submit">Create job</button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+
+            <!-- end form -->
+
+
+            <!-- login page -->
+            <section class="flex flex-col md:flex-row h-screen items-center">
+
+                <div class="bg-blue-600 hidden lg:block w-full md:w-1/2 xl:w-2/3 h-screen">
+                    <img src="https://images.unsplash.com/photo-1444313431167-e7921088a9d3?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=1441&q=100"
+                        alt="" class="w-full h-full object-cover">
+                </div>
+
+                <div class="bg-white w-full md:max-w-md lg:max-w-full md:mx-auto md:mx-0 md:w-1/2 xl:w-1/3 h-screen px-6 lg:px-16 xl:px-12
+                      flex items-center justify-center">
+
+                    <div class="w-full h-100">
+
+                        <h1 class="text-xl md:text-2xl font-bold leading-tight mt-12">Log in to your account</h1>
+
+                        <form class="mt-6" action="#" method="POST">
+                            <div>
+                                <label class="block text-gray-700">Email Address</label>
+                                <input type="email" name="" id="" placeholder="Enter Email Address"
+                                    class="w-full px-4 py-3 rounded-lg bg-gray-200 mt-2 border focus:border-blue-500 focus:bg-white focus:outline-none"
+                                    autofocus autocomplete required>
+                            </div>
+
+                            <div class="mt-4">
+                                <label class="block text-gray-700">Password</label>
+                                <input type="password" name="" id="" placeholder="Enter Password" minlength="6" class="w-full px-4 py-3 rounded-lg bg-gray-200 mt-2 border focus:border-blue-500
+                              focus:bg-white focus:outline-none" required>
+                            </div>
+
+                            <button type="submit" class="w-full block bg-blue-500 hover:bg-blue-400 focus:bg-blue-400 text-white font-semibold rounded-lg
+                            px-4 py-3 mt-6">Log In</button>
+                        </form>
+
+                        <hr class="my-6 border-gray-300 w-full">
+
+
+
+                        <p class="mt-8">Need an account? <a href="#"
+                                class="text-blue-500 hover:text-blue-700 font-semibold">Create an
+                                account</a></p>
+
+
+                    </div>
+                </div>
+
+            </section>
+
+            <!-- end login -->
+
+        </main>
+
+        <footer class="myFooter h-40 bg-gray-800 text-gray-300 text-center py-10">
+            <p class="text-sm text-gray-500 mt-12">&copy; 2020 Decha77 - All Rights Reserved.</p>
+        </footer>
+
+    </div>
+
+
+
+    <script src="https://code.jquery.com/jquery-3.4.1.min.js"
+    integrity="sha256-CSXorXvZcTkaix6Yvo6HppcZGetbYMGWSFlBw8HfCJo=" crossorigin="anonymous"></script>
+
+  <script>
+    $('.navbar-toggler').click(function () {
+      $(this).toggleClass('active');
+      $('.navigation-menu').toggleClass('hidden');
+      $('#navbar').addClass('bg-white');
+    });
+
+    $(function () {
+      var navigation = $("#navbar");
+
+      $(window).scroll(function () {
+        var scroll = $(window).scrollTop();
+        if (scroll >= 10) {
+          navigation.addClass("bg-white xl:py-4 shadow-md");
+          navigation.removeClass("xl:py-8");
+        } else {
+          navigation.removeClass("bg-white xl:py-4 shadow-md");
+          navigation.addClass("xl:py-8");
+        }
+      });
+    });
+  </script>
+</body>
+
+</html>

@@ -1,10 +1,20 @@
 from django.db import models
+from django.contrib.auth import get_user_model
+
+
+User = get_user_model()
 
 # Create your models here.
 
 
+class ProjectManager (models.Model):
+    project_manager = models.ForeignKey(User, on_delete=models.CASCADE)
+
+
 class College(models.Model):
     college_name = models.CharField(max_length=256)
+    project_manager = models.ForeignKey(
+        ProjectManager, on_delete=models.CASCADE)
 
     def __str__(self):
         return self.college_name
@@ -18,11 +28,7 @@ class Activity(models.Model):
 
 
 class Person(models.Model):
-<<<<<<< HEAD
     username = models.CharField(max_length=256)
-=======
-    username =models.CharField(max_length=256)
->>>>>>> dc4a1da56a331287e5e82cbe10a9775554ba22a1
     phone = models.IntegerField()
 
     def __str__(self):
