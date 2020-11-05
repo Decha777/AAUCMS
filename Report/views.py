@@ -7,7 +7,15 @@ def create_activity(request):
         Activity.objects.create(activity_name=request.POST['activity_name'])
     return redirect('/tasks')
 
+
+from django.contrib.auth import authenticate, login, logout
+from django.http import HttpResponseRedirect, HttpResponse
+from django.urls import reverse
+from django.contrib.auth.decorators import login_required
+
 # Create your views here.
+
+
 def list_activities(request):
     activities_list = Activity.objects.all()
     context = {'activities_list': activities_list}

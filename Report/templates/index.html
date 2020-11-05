@@ -1,7 +1,8 @@
-{% extends 'base.html' %} 
 
-{% block content %} 
-{% if activities_list %}
+{% extends 'base.html' %} 
+{% block content %}
+
+ {% if activities_list %}
 <ul>
   {% for activity in activities_list %}
   <li><a href="">{{ activity.activity_name }}</a></li>
@@ -23,6 +24,7 @@
   <input type="submit" />
 </form>
   {% endfor %}
+
   
 </ul>
 {% else %}
@@ -36,3 +38,5 @@
 </form>
 
 {% endblock %}
+
+

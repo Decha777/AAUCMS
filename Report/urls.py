@@ -7,5 +7,5 @@ app_name = 'Report'
 urlpatterns = [
     path('tasks', views.list_activities, name='activity'),
     path('create_activity',views.create_activity)
+    path('', views.report, name='home')
 ]
-
