@@ -16,21 +16,50 @@ from django.contrib.auth.decorators import login_required
 # Create your views here.
 
 
-def list_activities(request):
+from django.views import View
+
+
+
+
+
+class TaskView(View):
     activities_list = Activity.objects.all()
     context = {'activities_list': activities_list}
-    if request.method  == 'POST':
-        decision = request.POST['decision_name']
+    def setDecision(self,decision):
         decision = Decision.objects.create(decision_name=decision)
-        problem_encountered = request.POST['problem_name']
+        return decision;
+    def setProblemEnc(self,problem_encountered):
         problem = Problem.objects.create(problem_name = problem_encountered)
-        username = request.POST['username']
-
-        phone = request.POST['phone']
-        person = Person.objects.create(phone=phone,username=username)
-        activity_id = request.POST['activity_id']
+        return problem
+    def setActivity(self,activity_id):
         activity = Activity.objects.get(pk = activity_id)
-        college = College.objects.create(college_name = 'College')
-        task = Task.objects.create(decision = decision, problem = problem,activity=activity,responsible_person=person,college=college)
-        task.save()
-    return render(request, '../templates/index.html', context)
+        return activity
+    def post(self,request):
+        if request.method  == 'POST':
+            decision = request.POST['decision_name']
+            
+            problem_encountered = request.POST['problem_name']
+            
+            username = request.POST['username']
+
+            phone = request.POST['phone']
+            person = Person.objects.create(phone=phone,username=username)
+            activity_id = request.POST['activity_id']
+            
+            college = College.objects.create(college_name = 'College')
+            task = Task.objects.create(decision = self.setDecision(decision), problem = self.setProblemEnc(problem_encountered),activity= self.setActivity(activity_id),responsible_person=person,college=college)
+            task.save()
+        return render(request, '../templates/index.html', self.context)
+    def get(self,request):
+        return render(request, '../templates/index.html', self.context)
+
+
+# @login_required
+def report(request):
+    return render(request, '../templates/report.html')
+
+
+
+
+
+
