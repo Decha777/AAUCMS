@@ -1,5 +1,5 @@
 from django.shortcuts import render, redirect
-from .models import Activity, Problem, Task, Decision, Problem, Person, College
+from .models import Activity, Problem, Task, Decision, Problem, Person, College, ProjectManager
 
 
 def create_activity(request):
@@ -14,13 +14,7 @@ from django.urls import reverse
 from django.contrib.auth.decorators import login_required
 
 # Create your views here.
-
-
 from django.views import View
-
-
-
-
 
 class TaskView(View):
     activities_list = Activity.objects.all()
@@ -34,6 +28,10 @@ class TaskView(View):
     def setActivity(self,activity_id):
         activity = Activity.objects.get(pk = activity_id)
         return activity
+    def getCollege(self,user):
+        pm = ProjectManager.objects.get(project_manager=user)
+        college = College.objects.get(project_manager=pm)
+        return college
     def post(self,request):
         if request.method  == 'POST':
             decision = request.POST['decision_name']
@@ -45,8 +43,8 @@ class TaskView(View):
             phone = request.POST['phone']
             person = Person.objects.create(phone=phone,username=username)
             activity_id = request.POST['activity_id']
-            
-            college = College.objects.create(college_name = 'College')
+            print(request.user)
+            college = self.getCollege(request.user)
             task = Task.objects.create(decision = self.setDecision(decision), problem = self.setProblemEnc(problem_encountered),activity= self.setActivity(activity_id),responsible_person=person,college=college)
             task.save()
         return render(request, '../templates/index.html', self.context)
