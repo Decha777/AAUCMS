@@ -5,37 +5,166 @@
  {% if activities_list %}
 <ul>
   {% for activity in activities_list %}
+  
   <li><a href="">{{ activity.activity_name }}</a></li>
+
   <form method="POST"> 
-    {% csrf_token %}
     <input type="hidden" name="activity_id" value="{{ activity.id }}">
-    <input name="decision_name" id="decision{{ forloop.counter }}" />
-    <label for="decision{{ forloop.counter }}">Decision Taken</label>
-  <br/>
-  <input name="problem_name" id="prob{{ forloop.counter }}" />
-  <label for="prob{{ forloop.counter }}">Problems Encountered</label
-  ><br />
-  <input name="username" id="resp{{ forloop.counter }}" />
-  <label for="resp{{ forloop.counter }}">Name</label
-  ><br />
-  <input name="phone" id="phone{{ forloop.counter }}" />
-  <label for="resp{{ forloop.counter }}">Phone</label
-  ><br />
-  <input type="submit" />
-</form>
+    <input name="decision_name" onfocusout="subm('{{activity.id}}')" id="decision{{ activity.id }}" />
+    <label for="decision{{ activity.id }}">Decision Taken</label>
+    <br/>
+    <input name="problem_name" onfocusout="subm('{{activity.id}}')" id="problem{{ activity.id }}" />
+    <label for="problem{{activity.id }}">Problems Encountered</label
+    ><br />
+    <input name="username" onfocusout="subm('{{activity.id}}')" id="username{{ activity.id }}" />
+    <label for="username{{ activity.id }}">Name</label
+    ><br />
+    <input name="phone" onfocusout="subm('{{activity.id}}')" id="phone{{ activity.id }}" />
+    <label for="phone{{ activity.id }}">Phone</label
+    ><br />
+  </form>
+
   {% endfor %}
+ 
+<script>
+  function subm(a){
+    // preventing from page reload and default actions
+        // e.preventDefault();
+        var decision1 = $("#decision"+a).val();
+        var phone1 = $("#phone"+a).val();
+        var username1 = $("#username"+a).val();
+        var problem1= $("#problem"+a).val();
+      $.ajax({
+        url: '/tasks',
+        type: "POST",
+        data: {
+          'activity_id': a,
+          'decision_name':decision1,
+          'phone':phone1,
+          'username':username1,
+          'problem_name':problem1,
+          csrfmiddlewaretoken: '{{ csrf_token }}'
+
+        },
+        dataType: 'json',
+        success: function (data) {
+          $("#decision"+a).val(decision(data.task.decision))
+          $("#prob"+a).val('hi')
+        }
+      });
+
+
+  }
 
   
-</ul>
-{% else %}
-<p>No activities are available.</p>
-{% endif %}
-<label for="Add activity">Add activity</label>
-<form action = "/create_activity" method="POST" >{% csrf_token %}
-  <input id="Add activity" name="activity_name"/>
+  check();
+  
+  function check(){
+    $.ajax({
+        url: '/get_activities_task',
+        type: "POST",
+        async:false,
+        data: {
+          csrfmiddlewaretoken: '{{ csrf_token }}'
+        },
+        dataType: 'json',
+        success: function (data) {
+          for(let task of data.tasks){
+            console.log(task)
+            $("#decision"+task.activity_id).val(decision(task.decision_id))
+            $("#problem"+task.activity_id).val(problem(task.problem_id))
+            $("#phone"+task.activity_id).val(person(task.responsible_person_id).phone)
+            $("#username"+task.activity_id).val(person(task.responsible_person_id).username)
+          }
+        }
+      })
+  }
+  function decision(a){
+    response = $.ajax({
+        url: '/get_decision_name',
+        type: "POST",
+        async:false,
+        data: {
+          'decision': a,
+          csrfmiddlewaretoken: '{{ csrf_token }}'
+        },
+        dataType: 'json',
+        success: function (data) {
+        }
+      }).responseJSON;
+      return response.decision.decision_name;
+  }
+  function problem(a){
+    response = $.ajax({
+        url: '/get_problem_name',
+        type: "POST",
+        async:false,
+        data: {
+          'problem': a,
+          csrfmiddlewaretoken: '{{ csrf_token }}'
+        },
+        dataType: 'json',
+        success: function (data) {
+        }
+      }).responseJSON;
+      console.log(response)
+      return response.problem.problem_name;
+  }
+  function person(a){
+    response = $.ajax({
+        url: '/get_responsible_person',
+        type: "POST",
+        async:false,
+        data: {
+          'person': a,
+          csrfmiddlewaretoken: '{{ csrf_token }}'
+        },
+        dataType: 'json',
+        success: function (data) {
+        }
+      }).responseJSON;
+      return response.person;
+  }
 
-  <input type="submit" />
-</form>
+  
+
+</script>
+  
+</ul>
+
+
+{% else %}
+<ul>
+  <div id="add_to_me"></div>
+  </ul>
+<p id="noActivities">No activities are available.</p>
+{% endif %}
+
+<label for="Add activity">Add Task</label>
+
+  <input id="newActivity" name="activity_name"/>
+
+  <button onclick="create_activity();"> Add </button>
+
+
+<script>
+  function create_activity(){
+    response = $.ajax({
+        url: '/create_activity',
+        type: "POST",
+        async:false,
+        data: {
+          'activity_name': $("#newActivity").val(),
+          csrfmiddlewaretoken: '{{ csrf_token }}'
+        },
+        dataType: 'json',
+        success: function (data) {
+        }
+      }).responseJSON;
+      activity = response.activity
+      document.getElementById("add_to_me").innerHTML +=  '<li><a href="">'+activity.activity_name +'</a></li><form method="POST"> <input type="hidden" name="activity_id" value="'+ activity.id +'"><input name="decision_name" onfocusout="subm('+ activity.id +')" id="decision'+ activity.id +'" /><label for="decision'+ activity.id +'">Decision Taken</label><br/><input name="problem_name" onfocusout="subm('+ activity.id +')" id="problem'+ activity.id +'" /><label for="problem'+ activity.id +'">Problems Encountered</label><br /><input onfocusout="subm('+ activity.id +')" id="username'+ activity.id +'" /><label for="username'+ activity.id +'">Name</label><br/><input onfocusout="subm('+ activity.id +')" id="phone'+ activity.id +'" /> <label for="phone'+ activity.id +'">Phone</label><br /></form>'
+  }
+</script>
 
 {% endblock %}
 
