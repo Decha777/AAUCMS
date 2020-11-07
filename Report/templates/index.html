@@ -359,7 +359,23 @@
 
   <button onclick="create_activity();"> Add </button>
 
+  <div class="pagination">
+    <span class="step-links">
+        {% if activities_list.has_previous %}
+            <a href="?page=1">&laquo; first</a>
+            <a href="?page={{ activities_list.previous_page_number }}">previous</a>
+        {% endif %}
 
+        <span class="current">
+            Page {{ activities_list.number }} of {{ activities_list.paginator.num_pages }}.
+        </span>
+
+        {% if activities_list.has_next %}
+            <a href="?page={{ activities_list.next_page_number }}">next</a>
+            <a href="?page={{ activities_list.paginator.num_pages }}">last &raquo;</a>
+        {% endif %}
+    </span>
+</div>
 <script>
   function create_activity(){
     response = $.ajax({

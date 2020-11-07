@@ -3,6 +3,7 @@ from .models import Activity, Problem, Task, Decision, Problem, Person, College,
 from django.http import JsonResponse
 from django.forms.models import model_to_dict
 from django.contrib.postgres.search import SearchVector
+from django.core.paginator import Paginator
 
 def create_activity(request):
     if request.method  == 'POST':
@@ -42,7 +43,6 @@ class TaskView(View):
         return college
     def getPerson(self,phone,username,activity):
         person = Person.objects.filter(phone=phone,username=username)
-        print(phone)
         if person.exists():
             return person.first()
         person = Person.objects.create(phone=phone,username=username)
@@ -84,8 +84,11 @@ class TaskView(View):
         if( not request.user.is_authenticated):
             return redirect('accounts/login/')
         activities_list = Activity.objects.all()
-        
-        context = {'activities_list': list(activities_list.values())}
+        paginator = Paginator(activities_list, 4) # Show 25 contacts per page.
+
+        page_number = request.GET.get('page')
+        page_obj = paginator.get_page(page_number)
+        context = {'activities_list': page_obj}
         return render(request, '../templates/index.html', context)
 
 def get_decision_name(request):
