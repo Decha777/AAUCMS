@@ -134,10 +134,53 @@ def get_activities_task(request):
 
 # @login_required
 def report(request):
-    return render(request, '../templates/report.html')
+    
+    
+    
+    college_id = request.POST.get('college')
+    print(college_id)
+    if (college_id == 'All'):
+        return redirect('/')
+    elif college_id == None:
+        tasks_list = Task.objects.all()
+    else:
+        tasks_list = Task.objects.filter(college_id = college_id)
+        
+    colleges = College.objects.all()
 
+    paginator = Paginator(tasks_list, 3) # Show 25 contacts per page.
 
+    page_number = request.GET.get('page')
+    page_obj = paginator.get_page(page_number)
+    return render(request, '../templates/report.html' ,{'colleges':colleges,'tasks_list': page_obj})
 
+def college_report(request,id):
+    colleges = College.objects.all()
+    if (id == 0):
+        return redirect('/')
+    elif id == None:
+        return redirect('/')
+    else:
+        tasks_list = Task.objects.filter(college_id = id)
+    college = College.objects.get(pk = id)
+    paginator = Paginator(tasks_list, 3) # Show 25 contacts per page.
 
+    page_number = request.GET.get('page')
+    page_obj = paginator.get_page(page_number)
+    return render(request, '../templates/college_report.html', {'colleges':colleges,'tasks_list': page_obj,'college_name':college.college_name})
+    
+    
+def activity_report(request):
+    activities_list = Activity.objects.all()
+    tasks_all = []
+    for activity in activities_list:
+        tasks = Task.objects.filter(activity = activity)
+        tasks_all.append(tasks)
+    print(tasks_all)
+    paginator = Paginator(tasks_all, 3) # Show 25 contacts per page.
+
+    page_number = request.GET.get('page')
+    page_obj = paginator.get_page(page_number)
+    return render(request, '../templates/activity_report.html', {'tasks_all': page_obj})
 
 

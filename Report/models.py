@@ -13,8 +13,8 @@ class ProjectManager (models.Model):
 
 class College(models.Model):
     college_name = models.CharField(max_length=256)
-    project_manager = models.ForeignKey(
-        ProjectManager, on_delete=models.CASCADE, null=True)
+    project_manager = models.OneToOneField(
+        ProjectManager, on_delete=models.CASCADE, null=True, unique=True)
 
     def __str__(self):
         return self.college_name

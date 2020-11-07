@@ -3,13 +3,14 @@
 
  Report page <br><br>
  <a href="/" class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 opacity-50 rounded">Browse by Colleges</a> &nbsp;
- <a href="/activity_report" class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded ">Browse by Activities</a><br>
+ <a href="/activity_report" class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded ">Browse by Activities</a>
+ <br>
  {% if colleges %}
  <br>
  Select college
 
  <select id="selectCollege">
-   
+    <option value="0">{{college_name}}</option>
     <option value="0">All</option>
       {% for college in colleges %}
      <option value="{{college.id}}">{{college.college_name}}</option>
@@ -21,13 +22,14 @@
         $("#selectCollege").click(function(){
             var college = $("#selectCollege").val()
             
-            location.href = "college_report/"+college
+            location.href = ""+college
         })
     </script>
+    <h1 style="font-weight: bold;">{{college_name}}</h1> <br>
  <div>
+     
     {% for task in tasks_list %}
-     <h2>{{task.activity}}</h2>
-     College: {{task.college}}<br>
+     <h2>{{task.activity}}</h2><br>
      {% if task.problem %}
      Problem encountered: {{task.problem}}<br>
      {% endif %}

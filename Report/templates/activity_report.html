@@ -1,9 +1,9 @@
 {% extends 'base.html' %} {% block content %}
  
 
- Report page <br><br>
- <a href="/" class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 opacity-50 rounded">Browse by Colleges</a> &nbsp;
- <a href="/activity_report" class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded ">Browse by Activities</a><br>
+ Report page <br> <br>
+ <a href="/" class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded">Browse by Colleges</a> &nbsp;
+ <a href="/activity_report" class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 opacity-50 rounded ">Browse by Activities</a><br><br>
  {% if colleges %}
  <br>
  Select college
@@ -16,7 +16,6 @@
      {% endfor %}
  </select> 
  {% endif %}
- <br> <br>
     <script>
         $("#selectCollege").click(function(){
             var college = $("#selectCollege").val()
@@ -25,6 +24,7 @@
         })
     </script>
  <div>
+    {% for tasks_list in tasks_all %}
     {% for task in tasks_list %}
      <h2>{{task.activity}}</h2>
      College: {{task.college}}<br>
@@ -45,21 +45,22 @@
      {% endif %}
      <br>
      {% endfor %}
+     {% endfor %}
  </div>
  <div class="pagination">
     <span class="step-links">
-        {% if tasks_list.has_previous %}
+        {% if tasks_all.has_previous %}
             <a href="?page=1">&laquo; first</a>
-            <a href="?page={{ tasks_list.previous_page_number }}">previous</a>
+            <a href="?page={{ tasks_all.previous_page_number }}">previous</a>
         {% endif %}
 
         <span class="current">
-            Page {{ tasks_list.number }} of {{ tasks_list.paginator.num_pages }}.
+            Page {{ tasks_all.number }} of {{ tasks_all.paginator.num_pages }}.
         </span>
 
-        {% if tasks_list.has_next %}
-            <a href="?page={{ tasks_list.next_page_number }}">next</a>
-            <a href="?page={{ tasks_list.paginator.num_pages }}">last &raquo;</a>
+        {% if tasks_all.has_next %}
+            <a href="?page={{ tasks_all.next_page_number }}">next</a>
+            <a href="?page={{ tasks_all.paginator.num_pages }}">last &raquo;</a>
         {% endif %}
     </span>
 </div>
