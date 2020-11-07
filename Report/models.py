@@ -29,25 +29,19 @@ class Activity(models.Model):
 
 class Person(models.Model):
     username = models.CharField(max_length=256)
-    phone = models.IntegerField(blank=True,null=True)
-    activity = models.ForeignKey(
-        Activity, on_delete=models.CASCADE, related_name='activity_person',null=True)
+    phone = models.CharField(blank=True,null=True,max_length=10)
     def __str__(self):
         return self.username
 
 
 class Problem(models.Model):
     problem_name = models.TextField()
-    activity = models.ForeignKey(
-        Activity, on_delete=models.CASCADE, related_name='activity_problem',null=True)
     def __str__(self):
         return self.problem_name
 
 
 class Decision(models.Model):
     decision_name = models.TextField()
-    activity = models.ForeignKey(
-        Activity, on_delete=models.CASCADE, related_name='activity_decision',null=True)
     def __str__(self):
         return self.decision_name
 

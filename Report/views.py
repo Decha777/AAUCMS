@@ -2,6 +2,7 @@ from django.shortcuts import render, redirect
 from .models import Activity, Problem, Task, Decision, Problem, Person, College, ProjectManager
 from django.http import JsonResponse
 from django.forms.models import model_to_dict
+from django.contrib.postgres.search import SearchVector
 
 def create_activity(request):
     if request.method  == 'POST':
@@ -18,22 +19,18 @@ from django.contrib.auth.decorators import login_required
 from django.views import View
 
 class TaskView(View):
-    activities_list = Activity.objects.all()
-    print(activities_list)
-    context = {'activities_list': list(activities_list.values())}
+    
     task_var = None;
-    def setDecision(self,decision,activity):
-        # decision = Decision.objects.filter(decision_name=decision)
-        # if decision.exists():
-        #     return decision.values()
-        # else:
-        decision = Decision.objects.create(decision_name=decision)
-        return decision;
+    def setDecision(self,decision_name,activity):
+        decision = Decision.objects.filter(decision_name=decision_name)
+        if decision.exists():
+            return decision.first()
+        decision = Decision.objects.create(decision_name=decision_name)
+        return decision
     def setProblemEnc(self,problem_encountered,activity):
-        # problem = Problem.objects.filter(problem_name = problem_encountered)
-        # if problem.exists():
-        #     return problem.values()
-        # else:
+        problem = Problem.objects.filter(problem_name = problem_encountered)
+        if problem.exists():
+            return problem.first()
         problem = Problem.objects.create(problem_name = problem_encountered)
         return problem
     def setActivity(self,activity_id):
@@ -44,16 +41,16 @@ class TaskView(View):
         college = College.objects.get(project_manager=pm)
         return college
     def getPerson(self,phone,username,activity):
-        person = Person.objects.filter(phone=phone,username=username,activity=activity)
+        person = Person.objects.filter(phone=phone,username=username)
+        print(phone)
         if person.exists():
-            return person
-        else:
-            person = Person.objects.create(phone=phone,username=username,activity=activity)
-            return person
+            return person.first()
+        person = Person.objects.create(phone=phone,username=username)
+        return person
     def taskExists(self,activity):
         task = Task.objects.filter(activity=activity)
         self.task_var = task
-        print(self.task_var)
+        
         if task.exists():
             return True
         else: return False
@@ -70,28 +67,46 @@ class TaskView(View):
 
             phone = request.POST['phone']
             if(phone == ''):
-                phone = None;   
+                phone = None;
             
             person = self.getPerson(phone,username,activity)
             
             
-            # if(self.taskExists(activity)):
-            #     task = self.task_var.update(decision = self.setDecision(decision,activity), problem = self.setProblemEnc(problem_encountered,activity),activity= activity,responsible_person=person,college=college)
-            #     task.save()
-            # else:
-            task = Task.objects.create(decision = self.setDecision(decision,activity), problem = self.setProblemEnc(problem_encountered,activity),activity= self.setActivity(activity_id),responsible_person=person,college=college)
-            task.save()
-            return JsonResponse({'task':model_to_dict(task)})
+            if(self.taskExists(activity)):
+                task = self.task_var.update(decision = self.setDecision(decision,activity), problem = self.setProblemEnc(problem_encountered,activity),activity= activity,responsible_person=person,college=college)
+            else:
+                task = Task.objects.create(decision = self.setDecision(decision,activity), problem = self.setProblemEnc(problem_encountered,activity),activity= self.setActivity(activity_id),responsible_person=person,college=college)
+                task.save()
+            return JsonResponse({'message':'success'})
         # return render(request, '../templates/index.html', self.context)
     
     def get(self,request):
-        return render(request, '../templates/index.html', self.context)
+        if( not request.user.is_authenticated):
+            return redirect('accounts/login/')
+        activities_list = Activity.objects.all()
+        
+        context = {'activities_list': list(activities_list.values())}
+        return render(request, '../templates/index.html', context)
 
 def get_decision_name(request):
     if request.method  == 'POST':
         decision_id = request.POST.get('decision',None)
         decision = Decision.objects.get(pk = decision_id)
         return JsonResponse({'decision':model_to_dict(decision)})
+
+def get_usernames(request):
+    if request.method  == 'POST':
+        username = request.POST.get('username',None)
+        # activity_id = request.POST.get('activity_id',None)
+        print(username)
+        person = Person.objects.filter(username__contains=username)
+        return JsonResponse({'persons':list(person.values())})
+
+def get_phones(request):
+    if request.method  == 'POST':
+        phone = request.POST.get('phone',None)        
+        person = Person.objects.filter(phone__contains=phone)
+        return JsonResponse({'persons':list(person.values())})
 
 def get_problem_name(request):
     if request.method  == 'POST':
