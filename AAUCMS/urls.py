@@ -20,7 +20,8 @@ from Report import views
 
 urlpatterns = [
     path('admin/', admin.site.urls),
-    path('', include('Report.urls', namespace='report')),
-    path('accounts/login/', LoginView.as_view(), name= 'user_login'),
-    path('accounts/logout/', LogoutView.as_view(), name= 'user_logout', kwargs={'next_page': '/'}),
+    path('accounts/', include('django.contrib.auth.urls')),
+    path('accounts/', include('Accounts.urls', namespace='Accounts')),
+    path('', include('Report.urls', namespace='Report')),
+    
 ]
