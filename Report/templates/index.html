@@ -1,0 +1,381 @@
+{% extends 'base.html' %} {% block content %}
+
+<div class="bg-primary-100 p-4 mt-12 flex flex-col justify-center text-gray-100 ">
+  {% if activities_list %}
+  <ul class="w-2/4 self-center bg-primary-200 text-gray-500">
+    {% for activity in activities_list %}
+
+    <div class="flex flex-col items-center">
+      <h1 class="mt-6 text-xl font-semibold capitalize" onclick="">
+        <span class="">task #{{ activity.id }} : </span>
+        {{activity.activity_name }}
+      </h1>
+      <div id="idshow">
+        <form method="POST" class="w-4/5 mx-auto mt-2 px-6 pt-6 pb-4 rounded">
+          <input type="hidden" class="" name="activity_id" value="{{ activity.id }}" />
+
+          <label class="mylabel" for="decision{{ activity.id }}">Decision Taken</label>
+          <textarea class="form-textarea myarea" name="decision_name" id="decision{{ activity.id }}" rows="3"
+            onfocusout="subm('{{activity.id}}')"></textarea>
+
+          <br />
+
+          <label for="problem{{activity.id }}" class="mylabel">Problems Encountered</label>
+          <textarea class="form-textarea myarea" name="problem_name" id="problem{{ activity.id }}" rows="3"
+            onfocusout="subm('{{activity.id}}')"></textarea>
+          <br />
+          <div class="flex justify-around">
+            <div class="autocomplete">
+              <label for="username{{ activity.id }}" class="mylabel">Name</label>
+              <input name="username" class="myinput form-input" oninput="username1('{{activity.id}}');"
+                onfocusout="subm('{{activity.id}}')" id="username{{ activity.id }}" />
+            </div>
+
+            <br />
+            <div class="autocomplete">
+              <label for="phone{{ activity.id }}" class="mylabel">Phone</label>
+              <input name="phone" class="myinput form-input" oninput="phone1('{{activity.id}}');"
+                onfocusout="subm('{{activity.id}}')" id="phone{{ activity.id }}" />
+            </div>
+          </div>
+        </form>
+      </div>
+    </div>
+
+    {% endfor %}
+
+    <script>
+
+
+      function autocomplete(inp, arr) {
+        /*the autocomplete function takes two arguments,
+        the text field element and an array of possible autocompleted values:*/
+        var currentFocus;
+        /*execute a function when someone writes in the text field:*/
+        inp.addEventListener("input", function (e) {
+          var a,
+            b,
+            i,
+            val = this.value;
+          /*close any already open lists of autocompleted values*/
+          closeAllLists();
+          if (!val) {
+            return false;
+          }
+          currentFocus = -1;
+          /*create a DIV element that will contain the items (values):*/
+          a = document.createElement("DIV");
+          a.setAttribute("id", this.id + "autocomplete-list");
+          a.setAttribute("class", "autocomplete-items");
+          /*append the DIV element as a child of the autocomplete container:*/
+          this.parentNode.appendChild(a);
+          /*for each item in the array...*/
+          for (i = 0; i < arr.length; i++) {
+            /*check if the item starts with the same letters as the text field value:*/
+            if (
+              arr[i].substr(0, val.length).toUpperCase() == val.toUpperCase()
+            ) {
+              /*create a DIV element for each matching element:*/
+              b = document.createElement("DIV");
+              /*make the matching letters bold:*/
+              b.innerHTML =
+                "<strong>" + arr[i].substr(0, val.length) + "</strong>";
+              b.innerHTML += arr[i].substr(val.length);
+              /*insert a input field that will hold the current array item's value:*/
+              b.innerHTML += "<input type='hidden' value='" + arr[i] + "'>";
+              /*execute a function when someone clicks on the item value (DIV element):*/
+              b.addEventListener("click", function (e) {
+                /*insert the value for the autocomplete text field:*/
+                inp.value = this.getElementsByTagName("input")[0].value;
+                /*close the list of autocompleted values,
+                    (or any other open lists of autocompleted values:*/
+                closeAllLists();
+              });
+              a.appendChild(b);
+            }
+          }
+        });
+        /*execute a function presses a key on the keyboard:*/
+        inp.addEventListener("keydown", function (e) {
+          var x = document.getElementById(this.id + "autocomplete-list");
+          if (x) x = x.getElementsByTagName("div");
+          if (e.keyCode == 40) {
+            /*If the arrow DOWN key is pressed,
+              increase the currentFocus variable:*/
+            currentFocus++;
+            /*and and make the current item more visible:*/
+            addActive(x);
+          } else if (e.keyCode == 38) {
+            //up
+            /*If the arrow UP key is pressed,
+              decrease the currentFocus variable:*/
+            currentFocus--;
+            /*and and make the current item more visible:*/
+            addActive(x);
+          } else if (e.keyCode == 13) {
+            /*If the ENTER key is pressed, prevent the form from being submitted,*/
+            e.preventDefault();
+            if (currentFocus > -1) {
+              /*and simulate a click on the "active" item:*/
+              if (x) x[currentFocus].click();
+            }
+          }
+        });
+        function addActive(x) {
+          /*a function to classify an item as "active":*/
+          if (!x) return false;
+          /*start by removing the "active" class on all items:*/
+          removeActive(x);
+          if (currentFocus >= x.length) currentFocus = 0;
+          if (currentFocus < 0) currentFocus = x.length - 1;
+          /*add class "autocomplete-active":*/
+          x[currentFocus].classList.add("autocomplete-active");
+        }
+        function removeActive(x) {
+          /*a function to remove the "active" class from all autocomplete items:*/
+          for (var i = 0; i < x.length; i++) {
+            x[i].classList.remove("autocomplete-active");
+          }
+        }
+        function closeAllLists(elmnt) {
+          /*close all autocomplete lists in the document,
+          except the one passed as an argument:*/
+          var x = document.getElementsByClassName("autocomplete-items");
+          for (var i = 0; i < x.length; i++) {
+            if (elmnt != x[i] && elmnt != inp) {
+              x[i].parentNode.removeChild(x[i]);
+            }
+          }
+        }
+        /*execute a function when someone clicks in the document:*/
+        document.addEventListener("click", function (e) {
+          closeAllLists(e.target);
+        });
+      }
+
+      /*initiate the autocomplete function on the "myInput" element, and pass along the countries array as possible autocomplete values:*/
+
+      function username1(a) {
+        var username = $("#username" + a).val();
+        var personArray = $.ajax({
+          url: "/get_usernames",
+          type: "POST",
+          async: false,
+          data: {
+            activity_id: a,
+            username: username,
+            csrfmiddlewaretoken: "{{ csrf_token }}",
+          },
+          dataType: "json",
+          success: function (data) { },
+        }).responseJSON;
+        var persons = [];
+        (async function () {
+          for await (let person of personArray.persons) {
+            persons.push(person.username);
+          }
+          autocomplete(document.getElementById("username" + a), persons);
+        })();
+      }
+      function phone1(a) {
+        var phone = $("#phone" + a).val();
+
+        var personArray = $.ajax({
+          url: "/get_phones",
+          type: "POST",
+          async: false,
+          data: {
+            activity_id: a,
+            phone: phone,
+            csrfmiddlewaretoken: "{{ csrf_token }}",
+          },
+          dataType: "json",
+          success: function (data) { },
+        }).responseJSON;
+        var persons = [];
+        (async function () {
+          for await (let person of personArray.persons) {
+            persons.push(String(person.phone));
+          }
+          autocomplete(document.getElementById("phone" + a), persons);
+        })();
+      }
+      function subm(a) {
+        // preventing from page reload and default actions
+        // e.preventDefault();
+        var decision1 = $("#decision" + a).val();
+        var phone1 = $("#phone" + a).val();
+        var username1 = $("#username" + a).val();
+        var problem1 = $("#problem" + a).val();
+        $.ajax({
+          url: "/tasks",
+          type: "POST",
+          data: {
+            activity_id: a,
+            decision_name: decision1,
+            phone: phone1,
+            username: username1,
+            problem_name: problem1,
+            csrfmiddlewaretoken: "{{ csrf_token }}",
+          },
+          dataType: "json",
+          success: function (data) { },
+        });
+      }
+
+      check();
+
+      function check() {
+        $.ajax({
+          url: "/get_activities_task",
+          type: "POST",
+          async: false,
+          data: {
+            csrfmiddlewaretoken: "{{ csrf_token }}",
+          },
+          dataType: "json",
+          success: function (data) {
+            for (let task of data.tasks) {
+              console.log(task);
+              $("#decision" + task.activity_id).val(decision(task.decision_id));
+              $("#problem" + task.activity_id).val(problem(task.problem_id));
+              $("#phone" + task.activity_id).val(
+                person(task.responsible_person_id).phone
+              );
+              $("#username" + task.activity_id).val(
+                person(task.responsible_person_id).username
+              );
+            }
+          },
+        });
+      }
+      function decision(a) {
+        response = $.ajax({
+          url: "/get_decision_name",
+          type: "POST",
+          async: false,
+          data: {
+            decision: a,
+            csrfmiddlewaretoken: "{{ csrf_token }}",
+          },
+          dataType: "json",
+          success: function (data) { },
+        }).responseJSON;
+        return response.decision.decision_name;
+      }
+      function problem(a) {
+        response = $.ajax({
+          url: "/get_problem_name",
+          type: "POST",
+          async: false,
+          data: {
+            problem: a,
+            csrfmiddlewaretoken: "{{ csrf_token }}",
+          },
+          dataType: "json",
+          success: function (data) { },
+        }).responseJSON;
+        console.log(response);
+        return response.problem.problem_name;
+      }
+      function person(a) {
+        response = $.ajax({
+          url: "/get_responsible_person",
+          type: "POST",
+          async: false,
+          data: {
+            person: a,
+            csrfmiddlewaretoken: "{{ csrf_token }}",
+          },
+          dataType: "json",
+          success: function (data) { },
+        }).responseJSON;
+        return response.person;
+      }
+    </script>
+  </ul>
+  {% else %}
+  <div class="mt-10 bg-primary-200">
+    <p id="noActivities">No activities are available.</p>
+    {% endif %}
+    <ul>
+      <div id="add_to_me"></div>
+    </ul>
+    <label for="Add activity" class="mylabel text-center">Add New Task</label>
+    <div class="flex align-middle justify-between w-1/2 self-center ">
+      <input id="newActivity" name="activity_name" class="myinput form-input  bg-white text-gray-900 w-full" />
+      <button onclick="create_activity();" class=" mx-2 btn w-1/2 bg-secondary-100 p-1 transition-all">
+        Add
+      </button>
+    </div>
+
+    <div class="pagination self-center mt-10 justify-between">
+      <span class="step-links">
+        {% if activities_list.has_previous %}
+        <a href="?page=1" class="btn bg-gray-400">&laquo; first</a>
+        <a href="?page={{ activities_list.previous_page_number }}" class="btn bg-gray-400">previous</a>
+
+        {% endif %}
+
+        <span class="current mylabel">
+          Page {{ activities_list.number }} of
+          {{activities_list.paginator.num_pages}}.
+        </span>
+
+        {% if activities_list.has_next %}
+        <a href="?page={{ activities_list.next_page_number }}" class="btn bg-gray-400">next</a>
+        <a href="?page={{ activities_list.paginator.num_pages }}" class="btn bg-gray-400">last &raquo;</a>
+        {% endif %}
+      </span>
+    </div>
+  </div>
+
+  <script>
+    function create_activity() {
+      response = $.ajax({
+        url: "/create_activity",
+        type: "POST",
+        async: false,
+        data: {
+          activity_name: $("#newActivity").val(),
+          csrfmiddlewaretoken: "{{ csrf_token }}",
+        },
+        dataType: "json",
+        success: function (data) { },
+      }).responseJSON;
+      activity = response.activity;
+      document.getElementById("add_to_me").innerHTML +=
+        '<li><a href="">' +
+        activity.activity_name +
+        '</a></li><form method="POST" class="w-6/12 bg-primary-100 text-gray-300 mx-auto mt-2 px-6 pt-6 pb-4 rounded"> <input type="hidden" name="activity_id" value="' +
+        activity.id +
+        '"><label class="mylabel" for="decision' +
+      activity.id +
+        '">Decision Taken</label><br/><input name="decision_name" placeholder="Enter new here" class=" myinput form-textarea w-full"  onfocusout="subm(' +
+        activity.id +
+        ')" id="decision' +
+        activity.id +
+        '" /><label class="mylabel" for="problem' +
+      activity.id +
+        '">Problems Encountered</label><input name="problem_name" class="myinput" placeholder="Enter new problem here"   onfocusout="subm(' +
+        activity.id +
+        ')" id="problem' +
+        activity.id +
+        '" /><br /><label label class="mylabel" for= "username' +
+        activity.id +
+        '">Name</label><input class="myinput" placeholder="Enter new name here"  onfocusout="subm(' +
+        activity.id +
+        ')" id="username' +
+        activity.id +
+        '" /><br/><label label class="mylabel" for= "phone' +
+        activity.id +
+        '">Phone</label><input class="myinput" placeholder="Enter new phone here"  onfocusout="subm(' +
+        activity.id +
+        ')" id="phone' +
+        activity.id +
+        '" /> <br /></form>';
+    }
+  </script>
+</div>
+
+{% endblock %}
