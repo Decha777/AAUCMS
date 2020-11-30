@@ -1,13 +1,13 @@
 {% extends 'base.html' %} {% block content %}
 
 <form
-  class="container mx-auto p-4 mt-12 bg-white flex flex-col items-center justify-center text-gray-700"
+  class="container w-1/2 mx-auto p-4 mt-12 bg-white flex flex-col items-center justify-center text-gray-700"
   method="POST"
 >
   {% csrf_token %}
 
-  <div class="w-10/12 sm:w-8/12 md:w-6/12 lg:w-5/12 xl:w-4/12 mb-4">
-    <h1 class="text-4xl font-semibold">Welcome back.</h1>
+  <div class="w-11/12 sm:w-8/12 md:w-6/12 lg:w-5/12 xl:w-4/12 mb-4">
+    <h1 class="text-2xl font-semibold">Welcome back.</h1>
   </div>
   <div class="w-10/12 sm:w-8/12 md:w-6/12 lg:w-5/12 xl:w-4/12 mb-6">
     <input
