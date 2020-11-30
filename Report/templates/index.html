@@ -1,8 +1,8 @@
 {% extends 'base.html' %} {% block content %}
 
-<div class="bg-primary-100 p-4 mt-12 flex flex-col justify-center text-gray-100 ">
+<div class=" p-4 mt-12 flex flex-col justify-center text-gray-100 ">
   {% if activities_list %}
-  <ul class="w-2/4 self-center bg-primary-200 text-gray-500">
+  <ul class="w-2/4 self-center bg-primary-200 text-gray-900">
     {% for activity in activities_list %}
 
     <div class="flex flex-col items-center">
@@ -295,85 +295,95 @@
     </script>
   </ul>
   {% else %}
-  <div class="mt-10 bg-primary-200">
-    <p id="noActivities">No activities are available.</p>
-    {% endif %}
+  <p id="noActivities">No activities are available.</p>
+  {% endif %}
+  <div class="bg-primary-200 w-1/2  self-center ">
     <ul>
       <div id="add_to_me"></div>
     </ul>
-    <label for="Add activity" class="mylabel text-center">Add New Task</label>
-    <div class="flex align-middle justify-between w-1/2 self-center ">
+  </div>
+
+  <div class="mt-10 bg-primary-200 w-1/2  self-center ">
+    <label for="Add activity" class="mylabel text-center  text-gray-900  ">Add New Task</label>
+    <div class="flex align-middle justify-between  ">
       <input id="newActivity" name="activity_name" class="myinput form-input  bg-white text-gray-900 w-full" />
       <button onclick="create_activity();" class=" mx-2 btn w-1/2 bg-secondary-100 p-1 transition-all">
         Add
       </button>
     </div>
 
-    <div class="pagination self-center mt-10 justify-between">
-      <span class="step-links">
-        {% if activities_list.has_previous %}
-        <a href="?page=1" class="btn bg-gray-400">&laquo; first</a>
-        <a href="?page={{ activities_list.previous_page_number }}" class="btn bg-gray-400">previous</a>
+  </div>
+  <div class="pagination self-center mt-10 justify-between text-gray-900">
+    <span class="step-links">
+      {% if activities_list.has_previous %}
+      <a href="?page=1" class="btn bg-gray-200">&laquo; first</a>
+      <a href="?page={{ activities_list.previous_page_number }}" class="btn bg-gray-200">previous</a>
 
-        {% endif %}
+      {% endif %}
 
-        <span class="current mylabel">
-          Page {{ activities_list.number }} of
-          {{activities_list.paginator.num_pages}}.
-        </span>
-
-        {% if activities_list.has_next %}
-        <a href="?page={{ activities_list.next_page_number }}" class="btn bg-gray-400">next</a>
-        <a href="?page={{ activities_list.paginator.num_pages }}" class="btn bg-gray-400">last &raquo;</a>
-        {% endif %}
+      <span class="current mylabel">
+        Page {{ activities_list.number }} of
+        {{activities_list.paginator.num_pages}}.
       </span>
-    </div>
+
+      {% if activities_list.has_next %}
+      <a href="?page={{ activities_list.next_page_number }}" class="btn bg-gray-200">next</a>
+      <a href="?page={{ activities_list.paginator.num_pages }}" class="btn bg-gray-200">last &raquo;</a>
+      {% endif %}
+    </span>
   </div>
 
   <script>
     function create_activity() {
-      response = $.ajax({
-        url: "/create_activity",
-        type: "POST",
-        async: false,
-        data: {
-          activity_name: $("#newActivity").val(),
-          csrfmiddlewaretoken: "{{ csrf_token }}",
-        },
-        dataType: "json",
-        success: function (data) { },
-      }).responseJSON;
-      activity = response.activity;
-      document.getElementById("add_to_me").innerHTML +=
-        '<li><a href="">' +
-        activity.activity_name +
-        '</a></li><form method="POST" class="w-6/12 bg-primary-100 text-gray-300 mx-auto mt-2 px-6 pt-6 pb-4 rounded"> <input type="hidden" name="activity_id" value="' +
-        activity.id +
-        '"><label class="mylabel" for="decision' +
-      activity.id +
-        '">Decision Taken</label><br/><input name="decision_name" placeholder="Enter new here" class=" myinput form-textarea w-full"  onfocusout="subm(' +
-        activity.id +
-        ')" id="decision' +
-        activity.id +
-        '" /><label class="mylabel" for="problem' +
-      activity.id +
-        '">Problems Encountered</label><input name="problem_name" class="myinput" placeholder="Enter new problem here"   onfocusout="subm(' +
-        activity.id +
-        ')" id="problem' +
-        activity.id +
-        '" /><br /><label label class="mylabel" for= "username' +
-        activity.id +
-        '">Name</label><input class="myinput" placeholder="Enter new name here"  onfocusout="subm(' +
-        activity.id +
-        ')" id="username' +
-        activity.id +
-        '" /><br/><label label class="mylabel" for= "phone' +
-        activity.id +
-        '">Phone</label><input class="myinput" placeholder="Enter new phone here"  onfocusout="subm(' +
-        activity.id +
-        ')" id="phone' +
-        activity.id +
-        '" /> <br /></form>';
+      console.log($("newActivity").val())
+      if ($("#newActivity").val() == "") {
+        alert("Task name cannot be empty")
+      } else {
+
+        response = $.ajax({
+          url: "/create_activity",
+          type: "POST",
+          async: false,
+          data: {
+            activity_name: $("#newActivity").val(),
+            csrfmiddlewaretoken: "{{ csrf_token }}",
+          },
+          dataType: "json",
+          success: function (data) { },
+        }).responseJSON;
+        activity = response.activity;
+        document.getElementById("add_to_me").innerHTML +=
+          '<h1 class="mt-6 text-xl font-semibold capitalize text-gray-900 text-center">' +
+          activity.activity_name +
+          '</h1><form method="POST" class="w-10/12 bg-primary-100 text-gray-900 mx-auto mt-2 px-6 pt-6 pb-4 rounded"> <input type="hidden" name="activity_id" value="' +
+          activity.id +
+          '"><label class="mylabel" for="decision' +
+          activity.id +
+          '">Decision Taken</label><br/><input name="decision_name" placeholder="Enter new here" class=" myinput form-textarea w-full"  onfocusout="subm(' +
+          activity.id +
+          ')" id="decision' +
+          activity.id +
+          '" /><label class="mylabel" for="problem' +
+          activity.id +
+          '">Problems Encountered</label><input name="problem_name" class="myinput" placeholder="Enter new problem here"   onfocusout="subm(' +
+          activity.id +
+          ')" id="problem' +
+          activity.id +
+          '" /><br /><label label class="mylabel" for= "username' +
+          activity.id +
+          '">Name</label><input class="myinput" placeholder="Enter new name here"  onfocusout="subm(' +
+          activity.id +
+          ')" id="username' +
+          activity.id +
+          '" /><br/><label label class="mylabel" for= "phone' +
+          activity.id +
+          '">Phone</label><input class="myinput" placeholder="Enter new phone here"  onfocusout="subm(' +
+          activity.id +
+          ')" id="phone' +
+          activity.id +
+          '" /> <br /></form>';
+      }
+
     }
   </script>
 </div>

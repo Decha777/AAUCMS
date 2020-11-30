@@ -148,7 +148,7 @@ def report(request):
         
     colleges = College.objects.all()
 
-    paginator = Paginator(tasks_list, 3) # Show 25 contacts per page.
+    paginator = Paginator(tasks_list, 10) # Show 25 contacts per page.
 
     page_number = request.GET.get('page')
     page_obj = paginator.get_page(page_number)
@@ -163,7 +163,7 @@ def college_report(request,id):
     else:
         tasks_list = Task.objects.filter(college_id = id)
     college = College.objects.get(pk = id)
-    paginator = Paginator(tasks_list, 3) # Show 25 contacts per page.
+    paginator = Paginator(tasks_list, 10) # Show 25 contacts per page.
 
     page_number = request.GET.get('page')
     page_obj = paginator.get_page(page_number)
@@ -177,7 +177,7 @@ def activity_report(request):
         tasks = Task.objects.filter(activity = activity)
         tasks_all.append(tasks)
     print(tasks_all)
-    paginator = Paginator(tasks_all, 3) # Show 25 contacts per page.
+    paginator = Paginator(tasks_all, 10) # Show 25 contacts per page.
 
     page_number = request.GET.get('page')
     page_obj = paginator.get_page(page_number)

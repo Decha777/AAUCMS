@@ -52,7 +52,7 @@ body {
 }
 
 .myinput {
-    @apply w-full h-10 p-2 border-b border-primary-100 bg-primary-200 text-white;
+    @apply w-full h-10 p-2 border-b border-primary-100 bg-white;
 }
 
 .myinput:focus {
@@ -64,7 +64,7 @@ body {
 }
 
 .myarea{
-  @apply w-full h-16  p-2 border-b border-primary-100 bg-primary-200 text-white;
+  @apply w-full h-16  p-2 border-b border-primary-100 bg-white;
 }
 
 .myarea:focus {
@@ -83,10 +83,10 @@ body {
 }
 
 .bycollege-title{
-  @apply  ml-4 text-gray-500 capitalize text-2xl pl-4 m-3;
+  @apply  ml-4 text-gray-800 capitalize text-2xl pl-4 m-3;
 }
 .bycollege-content{
-  @apply  p-2 rounded-lg w-2/3 bg-primary-100 h-full text-white;
+  @apply  p-2 rounded-lg w-2/3 bg-primary-100 h-full  ;
 }
 
 
